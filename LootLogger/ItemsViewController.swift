@@ -25,7 +25,6 @@ class ItemsViewController : UITableViewController {
         //  I calculate the index based on the array of items in the same section
         if let index = itemStore.allItems.filter({ getSectionOf(item: $0) == section }).firstIndex(of: newItem) {
             let indexPath = IndexPath(row: index, section: getSectionOf(item: newItem))
-            print("+ new Item section \(getSectionOf(item: newItem))")
             tableView.insertRows(at: [indexPath], with: .automatic)
         }
     }
@@ -46,12 +45,12 @@ class ItemsViewController : UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         let moreThan50SectionCount = itemStore.allItems.filter { getSectionOf(item: $0) == moreThan50Section } .count
-        print("Section \(section)")
+        
         if section == moreThan50Section {
-            print("moreThan50SectionCount: \(moreThan50SectionCount)")
+            
             return moreThan50SectionCount
         } else {
-            print("Other: \(itemStore.allItems.count - moreThan50SectionCount)")
+            
             return itemStore.allItems.count - moreThan50SectionCount
         }
     }
