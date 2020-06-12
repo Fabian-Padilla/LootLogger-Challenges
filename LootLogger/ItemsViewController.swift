@@ -21,10 +21,10 @@ class ItemsViewController : UITableViewController {
         
         //  I get the section of the new item
         let section = getSectionOf(item: newItem)
-        print("+ price: \(newItem.valueInDollars)")
+        
         //  I calculate the index based on the array of items in the same section
         if let index = itemStore.allItems.filter({ getSectionOf(item: $0) == section }).firstIndex(of: newItem) {
-            print(" - index: \(index), section: \(section)")
+            
             let indexPath = IndexPath(row: index, section: section)
             tableView.insertRows(at: [indexPath], with: .automatic)
         }
@@ -87,20 +87,28 @@ class ItemsViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        //  get the item
+        if sourceIndexPath.section != destinationIndexPath.section { return }
+        
         let arrayBySection = itemStore.allItems.filter{ getSectionOf(item: $0) == sourceIndexPath.section }
         
         let originalSourceItem = arrayBySection[sourceIndexPath.row]
-        
         let originalSourceIndex = itemStore.allItems.firstIndex(of: originalSourceItem)
         
         
         let originalDestinationItem = arrayBySection[destinationIndexPath.row]
-        
         let originalDestinationIndex = itemStore.allItems.firstIndex(of: originalDestinationItem)
         
         itemStore.moveItem(from: originalSourceIndex!, to: originalDestinationIndex!)
         
+    }
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        
+        if sourceIndexPath.section != proposedDestinationIndexPath.section {
+            return sourceIndexPath
+        } else {
+            return proposedDestinationIndexPath
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
