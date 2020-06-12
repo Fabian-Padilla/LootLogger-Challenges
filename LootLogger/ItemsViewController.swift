@@ -12,13 +12,20 @@ class ItemsViewController : UITableViewController {
     
     var itemStore: ItemStore!
     
+    let moreThan50Section = 0
+    let otherSection = 1
+    
     @IBAction func addNewItem(_ sender: UIButton) {
         
         let newItem = itemStore.createItem()
         
-        if let index = itemStore.allItems.firstIndex(of: newItem) {
-            let indexPath = IndexPath(row: index, section: 0)
-            
+        //  I get the section of the new item
+        let section = getSectionOf(item: newItem)
+        
+        //  I calculate the index based on the array of items in the same section
+        if let index = itemStore.allItems.filter({ getSectionOf(item: $0) == section }).firstIndex(of: newItem) {
+            let indexPath = IndexPath(row: index, section: getSectionOf(item: newItem))
+            print("+ new Item section \(getSectionOf(item: newItem))")
             tableView.insertRows(at: [indexPath], with: .automatic)
         }
     }
@@ -37,7 +44,16 @@ class ItemsViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemStore.allItems.count
+        
+        let moreThan50SectionCount = itemStore.allItems.filter { getSectionOf(item: $0) == moreThan50Section } .count
+        print("Section \(section)")
+        if section == moreThan50Section {
+            print("moreThan50SectionCount: \(moreThan50SectionCount)")
+            return moreThan50SectionCount
+        } else {
+            print("Other: \(itemStore.allItems.count - moreThan50SectionCount)")
+            return itemStore.allItems.count - moreThan50SectionCount
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -51,13 +67,16 @@ class ItemsViewController : UITableViewController {
         tableCell.textLabel?.text = item.name
         tableCell.detailTextLabel?.text = "$\(item.valueInDollars)"
         
+        
         return tableCell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            let item = itemStore.allItems[indexPath.row]
+            
+            // I filter by section before get the index
+            let item = itemStore.allItems.filter{ getSectionOf(item: $0) == indexPath.section }[indexPath.row]
             
             itemStore.removeItem(item)
             
@@ -70,5 +89,22 @@ class ItemsViewController : UITableViewController {
         
         itemStore.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
         
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == moreThan50Section {
+            return "More than $50"
+        } else {
+            return "$50 or less"
+        }
+    }
+    
+    func getSectionOf(item :Item) -> Int {
+        
+        return item.valueInDollars > 50 ? moreThan50Section : otherSection
     }
 }
