@@ -39,3 +39,9 @@ class Item {
         }
     }
 }
+
+extension Item : Equatable {
+    static func ==(lhs: Item, rhs: Item) -> Bool {
+        return lhs.dateCreated == rhs.dateCreated && lhs.name == rhs.name && lhs.serialNumber == rhs.serialNumber && lhs.valueInDollars == rhs.valueInDollars
+    }
+}
