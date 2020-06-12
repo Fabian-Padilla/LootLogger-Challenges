@@ -21,10 +21,11 @@ class ItemsViewController : UITableViewController {
         
         //  I get the section of the new item
         let section = getSectionOf(item: newItem)
-        
+        print("+ price: \(newItem.valueInDollars)")
         //  I calculate the index based on the array of items in the same section
         if let index = itemStore.allItems.filter({ getSectionOf(item: $0) == section }).firstIndex(of: newItem) {
-            let indexPath = IndexPath(row: index, section: getSectionOf(item: newItem))
+            print(" - index: \(index), section: \(section)")
+            let indexPath = IndexPath(row: index, section: section)
             tableView.insertRows(at: [indexPath], with: .automatic)
         }
     }
@@ -61,7 +62,7 @@ class ItemsViewController : UITableViewController {
         //let tableCell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
         let tableCell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         
-        let item = itemStore.allItems[indexPath.row]
+        let item = itemStore.allItems.filter{ getSectionOf(item: $0) == indexPath.section } [indexPath.row]
         
         tableCell.textLabel?.text = item.name
         tableCell.detailTextLabel?.text = "$\(item.valueInDollars)"
@@ -86,7 +87,19 @@ class ItemsViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        itemStore.moveItem(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        //  get the item
+        let arrayBySection = itemStore.allItems.filter{ getSectionOf(item: $0) == sourceIndexPath.section }
+        
+        let originalSourceItem = arrayBySection[sourceIndexPath.row]
+        
+        let originalSourceIndex = itemStore.allItems.firstIndex(of: originalSourceItem)
+        
+        
+        let originalDestinationItem = arrayBySection[destinationIndexPath.row]
+        
+        let originalDestinationIndex = itemStore.allItems.firstIndex(of: originalDestinationItem)
+        
+        itemStore.moveItem(from: originalSourceIndex!, to: originalDestinationIndex!)
         
     }
     
