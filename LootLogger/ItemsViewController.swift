@@ -15,12 +15,24 @@ class ItemsViewController : UITableViewController {
     let moreThan50Section = 0
     let otherSection = 1
     
+    var showOnlyFavorites = false
+    
+    @IBOutlet weak var btnFavorites: UIButton!
+    
     var isEmptySectionMoreThan50: Bool {
-        get { return itemStore.allItems.filter{getSectionOf(item: $0) == moreThan50Section}.count == 0 }
+        get { return itemStore.allItems.filter{ item in showableFilter(item, moreThan50Section)}.count == 0 }
     }
     
     var isEmptyOtherSection: Bool {
-        get { return itemStore.allItems.filter{getSectionOf(item: $0) == otherSection}.count == 0 }
+        get { return itemStore.allItems.filter{ item in showableFilter(item, otherSection)}.count == 0 }
+    }
+    
+    lazy var showableFilter: (_ item: Item, _ section: Int) -> Bool = {(item, section) in
+        if self.showOnlyFavorites {
+            return self.getSectionOf(item: item) == section && item.isFavorite == true
+        } else {
+            return self.getSectionOf(item: item) == section
+        }
     }
     
     func addEmptyStoreRow(indexPath: IndexPath) {
@@ -30,6 +42,14 @@ class ItemsViewController : UITableViewController {
     override func viewDidLoad() {
         addEmptyStoreRow(indexPath: IndexPath(row: 0, section: moreThan50Section))
         addEmptyStoreRow(indexPath: IndexPath(row: 0, section: otherSection))
+    }
+    
+    @IBAction func showFavorites(_ sender: UIButton) {
+        showOnlyFavorites = !showOnlyFavorites
+        btnFavorites.setTitle(showOnlyFavorites ? "Show all" : "Favorites", for: .normal)
+        
+        
+        tableView.reloadData()
     }
     
     @IBAction func addNewItem(_ sender: UIButton) {
@@ -50,7 +70,7 @@ class ItemsViewController : UITableViewController {
         }
         
         //  I calculate the index based on the array of items in the same section
-        if let index = itemStore.allItems.filter({ getSectionOf(item: $0) == section }).firstIndex(of: newItem) {
+        if let index = itemStore.allItems.filter({ item in showableFilter( item, section) })  .firstIndex(of: newItem) {
             
             let indexPath = IndexPath(row: index, section: section)
             tableView.insertRows(at: [indexPath], with: .automatic)
@@ -77,7 +97,7 @@ class ItemsViewController : UITableViewController {
             return 1
         } else {
             
-            let moreThan50SectionCount = itemStore.allItems.filter { getSectionOf(item: $0) == moreThan50Section } .count
+            let moreThan50SectionCount = itemStore.allItems.filter { item in showableFilter( item, moreThan50Section) } .count
             
             if section == moreThan50Section {
                 
@@ -103,7 +123,7 @@ class ItemsViewController : UITableViewController {
             tableCell.detailTextLabel?.text = ""
         } else {
             
-            let item = itemStore.allItems.filter{ getSectionOf(item: $0) == indexPath.section } [indexPath.row]
+            let item = itemStore.allItems.filter{ item in showableFilter( item, indexPath.section) } [indexPath.row]
             
             tableCell.textLabel?.text = "\(item.name) \(item.isFavorite ? "(favorite)" : "")"
             tableCell.detailTextLabel?.text = "$\(item.valueInDollars)"
@@ -123,7 +143,7 @@ class ItemsViewController : UITableViewController {
             }
             
             // I filter by section before get the index
-            let item = itemStore.allItems.filter{ getSectionOf(item: $0) == indexPath.section }[indexPath.row]
+            let item = itemStore.allItems.filter{ item in showableFilter( item, indexPath.section) }[indexPath.row]
             
             itemStore.removeItem(item)
             
@@ -141,7 +161,7 @@ class ItemsViewController : UITableViewController {
         
         if sourceIndexPath.section != destinationIndexPath.section { return }
         
-        let arrayBySection = itemStore.allItems.filter{ getSectionOf(item: $0) == sourceIndexPath.section }
+        let arrayBySection = itemStore.allItems.filter{ item in showableFilter( item, sourceIndexPath.section) }
         
         let originalSourceItem = arrayBySection[sourceIndexPath.row]
         let originalSourceIndex = itemStore.allItems.firstIndex(of: originalSourceItem)
@@ -170,15 +190,15 @@ class ItemsViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let isFavorite = itemStore.allItems.filter{getSectionOf(item: $0) == indexPath.section}[indexPath.row].isFavorite
+        let isFavorite = itemStore.allItems.filter{ item in showableFilter( item, indexPath.section) }[indexPath.row].isFavorite
         
         let title = isFavorite ?
         NSLocalizedString("Unfavorite", comment: "Unfavorite") :
         NSLocalizedString("Favorite", comment: "Favorite")
 
         let action = UIContextualAction(style: .normal, title: title, handler: { (action, view, completionHandler) in
-            self.itemStore.allItems.filter{self.getSectionOf(item: $0) == indexPath.section}[indexPath.row].isFavorite = !isFavorite
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            self.itemStore.allItems.filter{ item in self.showableFilter( item, indexPath.section) }[indexPath.row].isFavorite = !isFavorite
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 self.tableView.reloadData()
             }
             

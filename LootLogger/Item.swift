@@ -22,7 +22,7 @@ class Item {
         self.dateCreated = Date()
         self.isFavorite = false
     }
-    
+
     convenience init(random: Bool = false) {
         if random {
             let adjectives = ["Fluffy", "Rusty", "Shiny"]
