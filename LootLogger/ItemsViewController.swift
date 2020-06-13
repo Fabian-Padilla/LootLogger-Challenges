@@ -105,7 +105,7 @@ class ItemsViewController : UITableViewController {
             
             let item = itemStore.allItems.filter{ getSectionOf(item: $0) == indexPath.section } [indexPath.row]
             
-            tableCell.textLabel?.text = item.name
+            tableCell.textLabel?.text = "\(item.name) \(item.isFavorite ? "(favorite)" : "")"
             tableCell.detailTextLabel?.text = "$\(item.valueInDollars)"
         }
         
@@ -166,6 +166,38 @@ class ItemsViewController : UITableViewController {
         } else {
             return proposedDestinationIndexPath
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let isFavorite = itemStore.allItems.filter{getSectionOf(item: $0) == indexPath.section}[indexPath.row].isFavorite
+        
+        let title = isFavorite ?
+        NSLocalizedString("Unfavorite", comment: "Unfavorite") :
+        NSLocalizedString("Favorite", comment: "Favorite")
+
+        let action = UIContextualAction(style: .normal, title: title, handler: { (action, view, completionHandler) in
+            self.itemStore.allItems.filter{self.getSectionOf(item: $0) == indexPath.section}[indexPath.row].isFavorite = !isFavorite
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                self.tableView.reloadData()
+            }
+            
+            completionHandler(true)
+        })
+        
+        action.image = UIImage(named: "heart")
+        action.backgroundColor = isFavorite ? .red : .green
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if (indexPath.section == moreThan50Section && isEmptySectionMoreThan50) ||
+            (indexPath.section == otherSection && isEmptyOtherSection) {
+            return false
+        }
+        
+        return true
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

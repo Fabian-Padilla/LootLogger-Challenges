@@ -13,12 +13,14 @@ class Item {
     var valueInDollars: Int
     var serialNumber: String?
     var dateCreated: Date
+    var isFavorite: Bool
     
     init(name: String, serialNumber: String?, valueInDollars: Int) {
         self.name = name
         self.serialNumber = serialNumber
         self.valueInDollars = valueInDollars
         self.dateCreated = Date()
+        self.isFavorite = false
     }
     
     convenience init(random: Bool = false) {
