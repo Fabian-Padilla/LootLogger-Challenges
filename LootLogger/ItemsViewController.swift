@@ -15,12 +15,39 @@ class ItemsViewController : UITableViewController {
     let moreThan50Section = 0
     let otherSection = 1
     
+    var isEmptySectionMoreThan50: Bool {
+        get { return itemStore.allItems.filter{getSectionOf(item: $0) == moreThan50Section}.count == 0 }
+    }
+    
+    var isEmptyOtherSection: Bool {
+        get { return itemStore.allItems.filter{getSectionOf(item: $0) == otherSection}.count == 0 }
+    }
+    
+    func addEmptyStoreRow(indexPath: IndexPath) {
+        tableView.insertRows(at: [indexPath], with: .automatic)
+    }
+    
+    override func viewDidLoad() {
+        addEmptyStoreRow(indexPath: IndexPath(row: 0, section: moreThan50Section))
+        addEmptyStoreRow(indexPath: IndexPath(row: 0, section: otherSection))
+    }
+    
     @IBAction func addNewItem(_ sender: UIButton) {
+        
+        let _isEmptySectionMoreThan50 = isEmptySectionMoreThan50
+        let _isEmptyOtherSection = isEmptyOtherSection
         
         let newItem = itemStore.createItem()
         
         //  I get the section of the new item
         let section = getSectionOf(item: newItem)
+        
+        //  when empty rows, don´t add another one
+        if (section == moreThan50Section && _isEmptySectionMoreThan50) ||
+            (section == otherSection && _isEmptyOtherSection) {
+            tableView.reloadData()
+            return
+        }
         
         //  I calculate the index based on the array of items in the same section
         if let index = itemStore.allItems.filter({ getSectionOf(item: $0) == section }).firstIndex(of: newItem) {
@@ -45,35 +72,55 @@ class ItemsViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let moreThan50SectionCount = itemStore.allItems.filter { getSectionOf(item: $0) == moreThan50Section } .count
-        
-        if section == moreThan50Section {
-            
-            return moreThan50SectionCount
+        if (section == moreThan50Section && isEmptySectionMoreThan50) ||
+            (section == otherSection && isEmptyOtherSection) {
+            return 1
         } else {
             
-            return itemStore.allItems.count - moreThan50SectionCount
+            let moreThan50SectionCount = itemStore.allItems.filter { getSectionOf(item: $0) == moreThan50Section } .count
+            
+            if section == moreThan50Section {
+                
+                return moreThan50SectionCount
+            } else {
+                
+                return itemStore.allItems.count - moreThan50SectionCount
+            }
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        
         // insted of create a new UITableViewCell, lets use reuse
         //let tableCell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
         let tableCell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+     
+        if (indexPath.section == moreThan50Section && isEmptySectionMoreThan50) ||
+            (indexPath.section == otherSection && isEmptyOtherSection) {
         
-        let item = itemStore.allItems.filter{ getSectionOf(item: $0) == indexPath.section } [indexPath.row]
-        
-        tableCell.textLabel?.text = item.name
-        tableCell.detailTextLabel?.text = "$\(item.valueInDollars)"
-        
+            tableCell.textLabel?.text = "No items!"
+            tableCell.detailTextLabel?.text = ""
+        } else {
+            
+            let item = itemStore.allItems.filter{ getSectionOf(item: $0) == indexPath.section } [indexPath.row]
+            
+            tableCell.textLabel?.text = item.name
+            tableCell.detailTextLabel?.text = "$\(item.valueInDollars)"
+        }
         
         return tableCell
+    
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
+            
+            if (indexPath.section == moreThan50Section && isEmptySectionMoreThan50) ||
+                (indexPath.section == otherSection && isEmptyOtherSection) {
+                return
+            }
             
             // I filter by section before get the index
             let item = itemStore.allItems.filter{ getSectionOf(item: $0) == indexPath.section }[indexPath.row]
@@ -86,6 +133,11 @@ class ItemsViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        if (sourceIndexPath.section == moreThan50Section && isEmptySectionMoreThan50) ||
+            (sourceIndexPath.section == otherSection && isEmptyOtherSection) {
+            return
+        }
         
         if sourceIndexPath.section != destinationIndexPath.section { return }
         
@@ -103,6 +155,11 @@ class ItemsViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        
+        if (sourceIndexPath.section == moreThan50Section && isEmptySectionMoreThan50) ||
+            (sourceIndexPath.section == otherSection && isEmptyOtherSection) {
+            return sourceIndexPath
+        }
         
         if sourceIndexPath.section != proposedDestinationIndexPath.section {
             return sourceIndexPath
