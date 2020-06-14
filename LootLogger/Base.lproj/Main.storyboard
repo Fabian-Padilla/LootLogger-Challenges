@@ -54,29 +54,52 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UITableViewCell" textLabel="N2P-V4-DHJ" detailTextLabel="Aof-Ao-JfE" style="IBUITableViewCellStyleValue1" id="eWU-cT-pIx">
-                                <rect key="frame" x="0.0" y="88" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="65" id="eWU-cT-pIx" customClass="ItemCell" customModule="LootLogger" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eWU-cT-pIx" id="VqS-0c-t0j">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N2P-V4-DHJ">
-                                            <rect key="frame" x="20" y="12" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Name guillermo fabian poadilla leo" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31d-wI-fTd">
+                                            <rect key="frame" x="10" y="11" width="262.5" height="21"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Aof-Ao-JfE">
-                                            <rect key="frame" x="350" y="12" width="44" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Serial number" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vLd-Lh-reu">
+                                            <rect key="frame" x="10" y="36" width="78.5" height="14.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="$ 10,000.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWF-gm-bbZ">
+                                            <rect key="frame" x="312.5" y="22" width="91.5" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="XiY-9F-mJW"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="31d-wI-fTd" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="JWF-gm-bbZ" secondAttribute="leading" id="AkP-xk-Me8"/>
+                                        <constraint firstAttribute="bottom" secondItem="vLd-Lh-reu" secondAttribute="bottom" constant="14.5" id="F85-TD-gc4"/>
+                                        <constraint firstAttribute="trailing" secondItem="JWF-gm-bbZ" secondAttribute="trailing" constant="10" id="J6e-vu-VWx"/>
+                                        <constraint firstItem="31d-wI-fTd" firstAttribute="top" secondItem="VqS-0c-t0j" secondAttribute="top" constant="11" id="SSB-9S-M42"/>
+                                        <constraint firstItem="31d-wI-fTd" firstAttribute="leading" secondItem="VqS-0c-t0j" secondAttribute="leading" constant="10" id="UH8-93-ybk"/>
+                                        <constraint firstItem="vLd-Lh-reu" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="JWF-gm-bbZ" secondAttribute="leading" id="bHb-Ub-FhN"/>
+                                        <constraint firstItem="JWF-gm-bbZ" firstAttribute="top" secondItem="VqS-0c-t0j" secondAttribute="top" constant="22" id="fBf-rq-fHT"/>
+                                        <constraint firstItem="vLd-Lh-reu" firstAttribute="leading" secondItem="31d-wI-fTd" secondAttribute="leading" id="fGU-cI-XYL"/>
+                                        <constraint firstItem="vLd-Lh-reu" firstAttribute="top" secondItem="31d-wI-fTd" secondAttribute="bottom" constant="4" id="xDI-RK-atr"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="31d-wI-fTd" id="BEt-ut-ZYL"/>
+                                    <outlet property="serialNumberLabel" destination="vLd-Lh-reu" id="7lO-qv-zfY"/>
+                                    <outlet property="valueLabel" destination="JWF-gm-bbZ" id="duY-hs-H6E"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -90,7 +113,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="koF-Yj-WSe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-47" y="129"/>
+            <point key="canvasLocation" x="-47.826086956521742" y="128.57142857142856"/>
         </scene>
     </scenes>
 </document>

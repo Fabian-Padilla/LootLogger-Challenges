@@ -17,6 +17,7 @@
 		BCE5A4682491B47B0058D217 /* LootLoggerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE5A4672491B47B0058D217 /* LootLoggerUITests.swift */; };
 		BCE5A4772491BC7A0058D217 /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE5A4762491BC7A0058D217 /* ItemsViewController.swift */; };
 		BCE5A4792491C0640058D217 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE5A4782491C0640058D217 /* Item.swift */; };
+		BCEA162D249694AD00CB4803 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEA162C249694AD00CB4803 /* ItemCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		BCE5A4692491B47B0058D217 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCE5A4762491BC7A0058D217 /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		BCE5A4782491C0640058D217 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		BCEA162C249694AD00CB4803 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				BCE5A4532491B47B0058D217 /* Info.plist */,
 				BCE5A4782491C0640058D217 /* Item.swift */,
 				BC35E12C2491E7F600449D1E /* ItemStore.swift */,
+				BCEA162C249694AD00CB4803 /* ItemCell.swift */,
 			);
 			path = LootLogger;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				BCE5A4792491C0640058D217 /* Item.swift in Sources */,
 				BCE5A4772491BC7A0058D217 /* ItemsViewController.swift in Sources */,
 				BCE5A4462491B4780058D217 /* AppDelegate.swift in Sources */,
+				BCEA162D249694AD00CB4803 /* ItemCell.swift in Sources */,
 				BC35E12D2491E7F600449D1E /* ItemStore.swift in Sources */,
 				BCE5A4482491B4780058D217 /* SceneDelegate.swift in Sources */,
 			);

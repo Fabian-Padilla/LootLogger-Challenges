@@ -42,6 +42,9 @@ class ItemsViewController : UITableViewController {
     override func viewDidLoad() {
         addEmptyStoreRow(indexPath: IndexPath(row: 0, section: moreThan50Section))
         addEmptyStoreRow(indexPath: IndexPath(row: 0, section: otherSection))
+        
+        tableView.rowHeight = UITableView.automaticDimension // this is the defaukt value
+        //tableView.estimatedRowHeight = 65 // improves the performance
     }
     
     @IBAction func showFavorites(_ sender: UIButton) {
@@ -113,22 +116,27 @@ class ItemsViewController : UITableViewController {
         
         // insted of create a new UITableViewCell, lets use reuse
         //let tableCell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
-        let tableCell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
      
         if (indexPath.section == moreThan50Section && isEmptySectionMoreThan50) ||
             (indexPath.section == otherSection && isEmptyOtherSection) {
         
-            tableCell.textLabel?.text = "No items!"
-            tableCell.detailTextLabel?.text = ""
+            cell.valueLabel.text = ""
+            cell.serialNumberLabel.text = ""
+            cell.nameLabel.text = "No items!"
         } else {
             
             let item = itemStore.allItems.filter{ item in showableFilter( item, indexPath.section) } [indexPath.row]
             
-            tableCell.textLabel?.text = "\(item.name) \(item.isFavorite ? "(favorite)" : "")"
-            tableCell.detailTextLabel?.text = "$\(item.valueInDollars)"
+            cell.valueLabel.text = "$\(item.valueInDollars)"
+            cell.serialNumberLabel.text = item.serialNumber
+            cell.nameLabel.text = "\(item.name) \(item.isFavorite ? "(favorite)" : "")"
+            
+            cell.valueLabel.textColor = Double(item.valueInDollars) > 50 ? .green : .red
+            
         }
         
-        return tableCell
+        return cell
     
     }
     
