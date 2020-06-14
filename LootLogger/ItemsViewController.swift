@@ -94,11 +94,6 @@ class ItemsViewController : UITableViewController {
         
         if (section == moreThan50Section && isEmptySectionMoreThan50) ||
             (section == otherSection && isEmptyOtherSection) {
-            if section == moreThan50Section {
-                print("++ No Items!  more than 50")
-            } else {
-                print("++ No Items!  other section")
-            }
             return 1
         } else {
             
@@ -106,10 +101,8 @@ class ItemsViewController : UITableViewController {
             let otherSectionCount = itemStore.allItems.filter { item in showableFilter( item, otherSection) } .count
             
             if section == moreThan50Section {
-                print("++ more 50 Section \(moreThan50SectionCount)")
                 return moreThan50SectionCount
             } else {
-                print("++ other Section \(otherSectionCount)")
                 return otherSectionCount
             }
         }
