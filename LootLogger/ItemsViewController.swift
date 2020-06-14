@@ -45,9 +45,9 @@ class ItemsViewController : UITableViewController {
     }
     
     @IBAction func showFavorites(_ sender: UIButton) {
+        
         showOnlyFavorites = !showOnlyFavorites
         btnFavorites.setTitle(showOnlyFavorites ? "Show all" : "Favorites", for: .normal)
-        
         
         tableView.reloadData()
     }
@@ -94,17 +94,23 @@ class ItemsViewController : UITableViewController {
         
         if (section == moreThan50Section && isEmptySectionMoreThan50) ||
             (section == otherSection && isEmptyOtherSection) {
+            if section == moreThan50Section {
+                print("++ No Items!  more than 50")
+            } else {
+                print("++ No Items!  other section")
+            }
             return 1
         } else {
             
             let moreThan50SectionCount = itemStore.allItems.filter { item in showableFilter( item, moreThan50Section) } .count
+            let otherSectionCount = itemStore.allItems.filter { item in showableFilter( item, otherSection) } .count
             
             if section == moreThan50Section {
-                
+                print("++ more 50 Section \(moreThan50SectionCount)")
                 return moreThan50SectionCount
             } else {
-                
-                return itemStore.allItems.count - moreThan50SectionCount
+                print("++ other Section \(otherSectionCount)")
+                return otherSectionCount
             }
         }
     }
@@ -147,7 +153,11 @@ class ItemsViewController : UITableViewController {
             
             itemStore.removeItem(item)
             
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            if indexPath.row != 0 {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            } else {
+                tableView.reloadData()
+            }
             
         }
     }
