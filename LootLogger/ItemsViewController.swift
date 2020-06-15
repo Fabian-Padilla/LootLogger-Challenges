@@ -278,6 +278,12 @@ class ItemsViewController : UITableViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
     func getSectionOf(item :Item) -> Int {
         
         return item.valueInDollars > 50 ? moreThan50Section : otherSection

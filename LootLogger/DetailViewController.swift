@@ -42,4 +42,18 @@ class DetailViewController : UIViewController {
         
         
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        item.name = nameField.text ?? ""
+        item.serialNumber = serialField.text
+        
+        if let valueText = valueField.text,
+            let value = numberFormatter.number(from: valueText){
+            
+            item.valueInDollars = value.intValue
+        }
+        
+    }
 }
