@@ -243,6 +243,41 @@ class ItemsViewController : UITableViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        switch segue.identifier {
+        case "showItem":
+            // figure out what row was just tapped
+            if let indexPath = tableView.indexPathForSelectedRow {
+                
+                let items = itemStore.allItems.filter{ item in showableFilter(item,indexPath.section) }
+                
+                if items.count > 0 {
+                    let detailViewController = segue.destination as! DetailViewController
+                    detailViewController.item = items[indexPath.row]
+                }
+            }
+        default:
+            preconditionFailure("Unexpected segue identifier")
+        }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        switch identifier {
+        case "showItem":
+            if let indexPath = tableView.indexPathForSelectedRow {
+                
+                let items = itemStore.allItems.filter{ item in showableFilter(item,indexPath.section) }
+                
+                return items.count > 0
+            } else {
+                return false
+            }
+        default:
+            preconditionFailure("Unexpected segue identifier")
+        }
+    }
+    
     func getSectionOf(item :Item) -> Int {
         
         return item.valueInDollars > 50 ? moreThan50Section : otherSection
