@@ -19,6 +19,11 @@ class ItemsViewController : UITableViewController {
     
     @IBOutlet weak var btnFavorites: UIButton!
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        navigationItem.leftBarButtonItem = editButtonItem
+    }
+    
     var isEmptySectionMoreThan50: Bool {
         get { return itemStore.allItems.filter{ item in showableFilter(item, moreThan50Section)}.count == 0 }
     }
@@ -55,7 +60,7 @@ class ItemsViewController : UITableViewController {
         tableView.reloadData()
     }
     
-    @IBAction func addNewItem(_ sender: UIButton) {
+    @IBAction func addNewItem(_ sender: UIBarButtonItem) {
         
         let _isEmptySectionMoreThan50 = isEmptySectionMoreThan50
         let _isEmptyOtherSection = isEmptyOtherSection
@@ -77,19 +82,6 @@ class ItemsViewController : UITableViewController {
             
             let indexPath = IndexPath(row: index, section: section)
             tableView.insertRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
-    @IBAction func toggleEditingMode(_ sender: UIButton) {
-        
-        if isEditing {
-            sender.setTitle("Edit", for: .normal)
-            
-            setEditing(false, animated: true)
-        } else {
-            sender.setTitle("Done", for: .normal)
-            
-            setEditing(true, animated: true)
         }
     }
     

@@ -30,10 +30,22 @@ class DetailViewController : UIViewController {
         return formatter
     }()
     
-    var item: Item!
+    var item: Item! {
+        didSet {
+            navigationItem.title = item.name
+        }
+    }
+    
+    
+    @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
+        
+        view.endEditing(true)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        view.endEditing(true)
         
         nameField.text = item.name
         serialField.text = item.serialNumber
@@ -55,5 +67,13 @@ class DetailViewController : UIViewController {
             item.valueInDollars = value.intValue
         }
         
+    }
+}
+
+extension DetailViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
