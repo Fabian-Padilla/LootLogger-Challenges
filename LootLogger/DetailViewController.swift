@@ -36,6 +36,10 @@ class DetailViewController : UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        valueField.keyboardType = .numberPad
+    }
+    
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         
