@@ -90,6 +90,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="LootLogger" id="YCy-h4-yOv">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="e3m-2g-iHv"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ZKq-u5-hFI">
                             <connections>
                                 <action selector="addNewItem:" destination="7ev-JQ-OHj" id="cAb-v2-Aqo"/>
@@ -172,19 +173,44 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6F-qO-8Z6">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weV-iE-W4P">
                                         <rect key="frame" x="0.0" y="126" width="398" height="632"/>
-                                        <gestureRecognizers/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="lqa-So-bgQ" appends="YES" id="C87-eV-uEw"/>
-                                        </connections>
-                                    </label>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6F-qO-8Z6">
+                                                <rect key="frame" x="8" y="306" width="382" height="20.5"/>
+                                                <gestureRecognizers/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="lqa-So-bgQ" appends="YES" id="C87-eV-uEw"/>
+                                                </connections>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAf-MT-Jtc">
+                                                <rect key="frame" x="8" y="334" width="382" height="30"/>
+                                                <state key="normal" title="Edit date"/>
+                                                <connections>
+                                                    <action selector="EditDate:" destination="EBU-GG-J5R" eventType="touchUpInside" id="YS7-F1-2ta"/>
+                                                    <segue destination="iLQ-Ca-IvZ" kind="show" identifier="editDate" id="BgZ-Mz-k5q"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="kAf-MT-Jtc" firstAttribute="top" secondItem="F6F-qO-8Z6" secondAttribute="bottom" constant="7.5" id="4t8-tF-Rb5"/>
+                                            <constraint firstItem="kAf-MT-Jtc" firstAttribute="leading" secondItem="weV-iE-W4P" secondAttribute="leading" constant="8" id="GLk-8g-IMh"/>
+                                            <constraint firstAttribute="trailing" secondItem="kAf-MT-Jtc" secondAttribute="trailing" constant="8" id="Oua-gg-eaH"/>
+                                            <constraint firstItem="F6F-qO-8Z6" firstAttribute="centerY" secondItem="weV-iE-W4P" secondAttribute="centerY" id="THU-In-cX7"/>
+                                            <constraint firstAttribute="trailing" secondItem="F6F-qO-8Z6" secondAttribute="trailing" constant="8" id="U81-N6-kIs"/>
+                                            <constraint firstItem="F6F-qO-8Z6" firstAttribute="leading" secondItem="weV-iE-W4P" secondAttribute="leading" constant="8" id="eNa-Kd-CCp"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="weV-iE-W4P" secondAttribute="trailing" id="2VY-M7-fsD"/>
+                                    <constraint firstItem="weV-iE-W4P" firstAttribute="leading" secondItem="MW9-DA-Ftz" secondAttribute="leading" id="B85-h7-tC1"/>
                                     <constraint firstItem="Zsk-HO-7jt" firstAttribute="leading" secondItem="wLR-AI-flp" secondAttribute="leading" id="Yxp-lY-erN"/>
+                                    <constraint firstAttribute="bottom" secondItem="weV-iE-W4P" secondAttribute="bottom" id="iEo-HC-4aJ"/>
                                     <constraint firstItem="sS5-v5-vKy" firstAttribute="leading" secondItem="Zsk-HO-7jt" secondAttribute="leading" id="lVT-aR-Dwn"/>
                                 </constraints>
                             </stackView>
@@ -217,6 +243,38 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1750.7246376811595" y="128.57142857142856"/>
+        </scene>
+        <!--Edit Date Controller-->
+        <scene sceneID="IKG-bi-720">
+            <objects>
+                <viewController id="iLQ-Ca-IvZ" customClass="EditDateController" customModule="LootLogger" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MhI-0d-8bm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="AOd-bS-gQ1">
+                                <rect key="frame" x="0.0" y="88" width="414" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="etV-fp-hGM"/>
+                                </constraints>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="AOd-bS-gQ1" firstAttribute="leading" secondItem="MhI-0d-8bm" secondAttribute="leading" id="JNb-8c-ypJ"/>
+                            <constraint firstItem="AOd-bS-gQ1" firstAttribute="top" secondItem="Ofv-7K-4pf" secondAttribute="top" id="aLV-TN-Sq5"/>
+                            <constraint firstItem="Ofv-7K-4pf" firstAttribute="trailing" secondItem="AOd-bS-gQ1" secondAttribute="trailing" id="sVD-3P-qHu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ofv-7K-4pf"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8fh-Z2-vHM"/>
+                    <connections>
+                        <outlet property="dateItem" destination="AOd-bS-gQ1" id="RTg-XV-YNe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="53j-I8-six" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2565" y="129"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ckS-VO-V5S">

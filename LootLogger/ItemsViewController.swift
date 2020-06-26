@@ -22,6 +22,7 @@ class ItemsViewController : UITableViewController {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.backBarButtonItem?.title = "Log"
     }
     
     var isEmptySectionMoreThan50: Bool {

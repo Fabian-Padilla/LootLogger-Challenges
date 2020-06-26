@@ -15,6 +15,9 @@ class DetailViewController : UIViewController {
     @IBOutlet weak var valueField: UITextField!
     @IBOutlet weak var dateField: UILabel!
     
+    
+    
+    
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -40,6 +43,9 @@ class DetailViewController : UIViewController {
         valueField.keyboardType = .numberPad
     }
     
+    
+    @IBAction func EditDate(_ sender: UIButton) {
+    }
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         
@@ -71,6 +77,16 @@ class DetailViewController : UIViewController {
             item.valueInDollars = value.intValue
         }
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "editDate":
+            let editDateController = segue.destination as! EditDateController
+            editDateController.item = item
+        default:
+            preconditionFailure("Unexpected segue identifier")
+        }
     }
 }
 

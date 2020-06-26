@@ -19,7 +19,14 @@ class Item {
         self.name = name
         self.serialNumber = serialNumber
         self.valueInDollars = valueInDollars
-        self.dateCreated = Date()
+        
+        let today = Date()
+        var dayComponent = DateComponents()
+        dayComponent.day = -1
+        let calendar = Calendar.current
+        let yesterday = calendar.date(byAdding: dayComponent, to: today)
+        
+        self.dateCreated = yesterday!
         self.isFavorite = false
     }
 
