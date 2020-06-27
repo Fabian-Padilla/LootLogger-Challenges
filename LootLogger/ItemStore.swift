@@ -6,10 +6,31 @@
 //  Copyright © 2020 gp Apps. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ItemStore {
     var allItems = [Item]()
+    
+    let itemArchiveUrl: URL = {
+        let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentsDirectories.first!
+        return documentDirectory.appendingPathComponent("items.plist")
+    }()
+    
+    init() {
+        do {
+            
+            let data = try Data(contentsOf: itemArchiveUrl)
+            let unarchiver = PropertyListDecoder()
+            let items = try unarchiver.decode([Item].self, from: data)
+            allItems = items
+        } catch {
+            print("Error reading in saved items: \(error)")
+        }
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(saveChanges), name: UIScene.didEnterBackgroundNotification, object: nil)
+    }
     
     @discardableResult func createItem() -> Item {
         let newItem = Item(random: true)
@@ -35,5 +56,22 @@ class ItemStore {
         allItems.remove(at: fromIndex)
         
         allItems.insert(item, at: toIndex)
+    }
+    
+    @objc func saveChanges() -> Bool {
+        
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(allItems)
+            
+            try data.write(to: itemArchiveUrl, options: .atomic)
+            print("Saved all of the items")
+            return true
+        } catch  {
+            print("Error encoding all items: \(error)")
+            return false
+        }
+        
     }
 }
