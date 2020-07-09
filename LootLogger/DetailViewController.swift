@@ -14,7 +14,7 @@ class DetailViewController : UIViewController {
     @IBOutlet weak var serialField: UITextField!
     @IBOutlet weak var valueField: UITextField!
     @IBOutlet weak var dateField: UILabel!
-    
+    @IBOutlet var imageView: UIImageView!
     
     
     
@@ -39,6 +39,8 @@ class DetailViewController : UIViewController {
         }
     }
     
+    var imageStore: ImageStore!
+    
     override func viewDidLoad() {
         valueField.keyboardType = .numberPad
     }
@@ -52,6 +54,48 @@ class DetailViewController : UIViewController {
         view.endEditing(true)
     }
     
+    @IBAction func deletePhoto(_ sender: UIBarButtonItem) {
+        imageView.image = nil
+        imageStore.deleteImage(forKey: item.itemKey)
+    }
+    
+    @IBAction func choosePhotoSource(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alertController.modalPresentationStyle = .popover // page 302
+        alertController.popoverPresentationController?.barButtonItem = sender
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
+                let imagePicker = self.imagePicker(for: .camera)
+                imagePicker.allowsEditing = true
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+            alertController.addAction(cameraAction)
+        }
+        
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { _ in
+            let imagePicker = self.imagePicker(for: .photoLibrary)
+            imagePicker.modalPresentationStyle = .popover
+            imagePicker.popoverPresentationController?.barButtonItem = sender
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        alertController.addAction(photoLibraryAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func imagePicker(for sourceType: UIImagePickerController.SourceType) -> UIImagePickerController {
+        
+        let imgPicker = UIImagePickerController()
+        imgPicker.sourceType = sourceType
+        imgPicker.delegate = self
+        return imgPicker
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -62,7 +106,12 @@ class DetailViewController : UIViewController {
         valueField.text = numberFormatter.string(from: NSNumber(value: item.valueInDollars))
         dateField.text = dateFomatter.string(from: item.dateCreated)
         
+        //  get the itemkey
+        let key = item.itemKey
         
+        //  if there is an associated image with the item, display it on the image view
+        let imageToDisplay = imageStore.image(forKey: key)
+        imageView.image = imageToDisplay
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,5 +144,31 @@ extension DetailViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension DetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        let infoKey: UIImagePickerController.InfoKey
+        
+        if picker.allowsEditing {
+            infoKey = .editedImage
+        } else {
+            infoKey = .originalImage
+        }
+        
+        // get picked image from info dictionary
+        let image = info[infoKey] as! UIImage
+        
+        // store the image in the ImageStore for the item´s key
+        imageStore.setImage(image, forKey: item.itemKey)
+        
+        // put that image on the screen in the image view
+        imageView.image = image
+        
+        // take picker image off the screen
+        dismiss(animated: true, completion: nil)
     }
 }

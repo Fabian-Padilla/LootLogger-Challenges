@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC342A0D24A7A9B000343011 /* RuntimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC342A0C24A7A9B000343011 /* RuntimeError.swift */; };
 		BC35E12D2491E7F600449D1E /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC35E12C2491E7F600449D1E /* ItemStore.swift */; };
 		BC5DF0B324A27DD100AE6245 /* EditDateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5DF0B224A27DD100AE6245 /* EditDateController.swift */; };
 		BCE5A4462491B4780058D217 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE5A4452491B4780058D217 /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 		BCE5A4792491C0640058D217 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE5A4782491C0640058D217 /* Item.swift */; };
 		BCEA162D249694AD00CB4803 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEA162C249694AD00CB4803 /* ItemCell.swift */; };
 		BCEA162F2496D0E300CB4803 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEA162E2496D0E300CB4803 /* DetailViewController.swift */; };
+		BCF2876C24A8E4AA00BB8112 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF2876B24A8E4AA00BB8112 /* ImageStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BC342A0C24A7A9B000343011 /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
 		BC35E12C2491E7F600449D1E /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		BC5DF0B224A27DD100AE6245 /* EditDateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateController.swift; sourceTree = "<group>"; };
 		BCE5A4422491B4780058D217 /* LootLogger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LootLogger.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +62,7 @@
 		BCE5A4782491C0640058D217 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BCEA162C249694AD00CB4803 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		BCEA162E2496D0E300CB4803 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		BCF2876B24A8E4AA00BB8112 /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +125,8 @@
 				BCEA162C249694AD00CB4803 /* ItemCell.swift */,
 				BCEA162E2496D0E300CB4803 /* DetailViewController.swift */,
 				BC5DF0B224A27DD100AE6245 /* EditDateController.swift */,
+				BC342A0C24A7A9B000343011 /* RuntimeError.swift */,
+				BCF2876B24A8E4AA00BB8112 /* ImageStore.swift */,
 			);
 			path = LootLogger;
 			sourceTree = "<group>";
@@ -277,6 +283,8 @@
 				BCE5A4792491C0640058D217 /* Item.swift in Sources */,
 				BCE5A4772491BC7A0058D217 /* ItemsViewController.swift in Sources */,
 				BCE5A4462491B4780058D217 /* AppDelegate.swift in Sources */,
+				BCF2876C24A8E4AA00BB8112 /* ImageStore.swift in Sources */,
+				BC342A0D24A7A9B000343011 /* RuntimeError.swift in Sources */,
 				BCEA162D249694AD00CB4803 /* ItemCell.swift in Sources */,
 				BC35E12D2491E7F600449D1E /* ItemStore.swift in Sources */,
 				BC5DF0B324A27DD100AE6245 /* EditDateController.swift in Sources */,

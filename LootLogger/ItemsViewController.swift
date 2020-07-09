@@ -11,6 +11,7 @@ import UIKit
 class ItemsViewController : UITableViewController {
     
     var itemStore: ItemStore!
+    var imageStore: ImageStore!
     
     let moreThan50Section = 0
     let otherSection = 1
@@ -147,6 +148,9 @@ class ItemsViewController : UITableViewController {
             
             itemStore.removeItem(item)
             
+            //  remove the item´s image from the image store
+            imageStore.deleteImage(forKey: item.itemKey)
+            
             if indexPath.row != 0 {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             } else {
@@ -248,6 +252,7 @@ class ItemsViewController : UITableViewController {
                 if items.count > 0 {
                     let detailViewController = segue.destination as! DetailViewController
                     detailViewController.item = items[indexPath.row]
+                    detailViewController.imageStore = imageStore
                 }
             }
         default:

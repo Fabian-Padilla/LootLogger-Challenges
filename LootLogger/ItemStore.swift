@@ -58,7 +58,7 @@ class ItemStore {
         allItems.insert(item, at: toIndex)
     }
     
-    @objc func saveChanges() -> Bool {
+    @objc func saveChanges() throws {
         
         let encoder = PropertyListEncoder()
         
@@ -67,10 +67,9 @@ class ItemStore {
             
             try data.write(to: itemArchiveUrl, options: .atomic)
             print("Saved all of the items")
-            return true
         } catch  {
             print("Error encoding all items: \(error)")
-            return false
+            throw RuntimeError.readingDataError("Error reading in saved items: \(error)")
         }
         
     }

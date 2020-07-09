@@ -14,6 +14,7 @@ class Item: Codable {
     var serialNumber: String?
     var dateCreated: Date
     var isFavorite: Bool
+    var itemKey: String
     
     init(name: String, serialNumber: String?, valueInDollars: Int) {
         self.name = name
@@ -28,6 +29,7 @@ class Item: Codable {
         
         self.dateCreated = yesterday!
         self.isFavorite = false
+        self.itemKey = UUID().uuidString
     }
 
     convenience init(random: Bool = false) {
