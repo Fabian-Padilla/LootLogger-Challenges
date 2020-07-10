@@ -10,13 +10,14 @@ import UIKit
 
 class DetailViewController : UIViewController {
     
+    //  MARK: - Outlets
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var serialField: UITextField!
     @IBOutlet weak var valueField: UITextField!
     @IBOutlet weak var dateField: UILabel!
     @IBOutlet var imageView: UIImageView!
     
-    
+    //  MARK: -
     
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -45,6 +46,7 @@ class DetailViewController : UIViewController {
         valueField.keyboardType = .numberPad
     }
     
+    //  MARK: - Actions
     
     @IBAction func EditDate(_ sender: UIButton) {
     }
@@ -139,6 +141,7 @@ class DetailViewController : UIViewController {
     }
 }
 
+// MARK: - Text Field Delegate
 extension DetailViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -147,6 +150,7 @@ extension DetailViewController: UITextFieldDelegate {
     }
 }
 
+//  MARK: - Image picker controller delegate
 extension DetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
